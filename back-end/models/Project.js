@@ -5,6 +5,7 @@ const User = require("./User");
 const Project = db.define("project", {
   name: sequelize.STRING,
   link: sequelize.STRING,
+  difficulty: sequelize.INTEGER,
 });
 
 Project.hasMany(User);

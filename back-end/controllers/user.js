@@ -1,6 +1,4 @@
 const User = require("../models").user;
-var bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
 
 const controller = {
   getAll: async (req, res) => {
@@ -8,7 +6,7 @@ const controller = {
       const users = await User.findAll();
       return res.status(200).send(users);
     } catch (error) {
-      return res.status(500)
+      return res.status(500);
     }
   },
   getUser: async (req, res) => {
@@ -20,7 +18,7 @@ const controller = {
       }
       return res.status(200).json(user);
     } catch (error) {
-      return res.status(500)
+      return res.status(500);
     }
   },
   addUser: async (req, res) => {
@@ -44,7 +42,7 @@ const controller = {
 
       return res.status(201).json({ message: "Account created!", user });
     } catch (error) {
-      return res.status(500)
+      return res.status(500);
     }
   },
   updateUser: async (req, res) => {
@@ -63,7 +61,7 @@ const controller = {
         .status(200)
         .json({ message: "Data updated succesfully!", user });
     } catch (error) {
-      return res.status(500)
+      return res.status(500);
     }
   },
   deleteUser: async (req, res) => {
@@ -80,7 +78,7 @@ const controller = {
       res.statusCode = 200;
       return res.json({ message: "Account deleted!" });
     } catch (error) {
-      return res.status(500)
+      return res.status(500);
     }
   },
 };

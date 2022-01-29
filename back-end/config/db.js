@@ -1,6 +1,6 @@
 const Sequelize = require("sequelize");
 
-const db = new Sequelize("anonymous_grading", "root", "", {
+const db = new Sequelize("boilerplate", "root", "", {
   dialect: "mysql",
   host: "localhost",
   define: {

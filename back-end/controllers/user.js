@@ -4,7 +4,7 @@ const controller = {
   getAll: async (req, res) => {
     try {
       const users = await User.findAll();
-      return res.status(200).send(users);
+      return res.status(200).json({users});
     } catch (error) {
       return res.status(500);
     }
@@ -21,26 +21,45 @@ const controller = {
       return res.status(500);
     }
   },
+  getUserByProject: async (req, res) => {
+    try {
+      const projectId = parseInt(req.params.projectId);
+      const offset = parseInt(req.params.offset);
+      const user = await User.findAndCountAll({
+        where: {
+          projectId,
+        },
+        limit: 1,
+        offset,
+      });
+      if (!user) {
+        return res.status(404);
+      }
+      return res.status(200).json(user);
+    } catch (error) {
+      return res.status(500);
+    }
+  },
   addUser: async (req, res) => {
     try {
-      const { firstName, lastName, email, password } = req.body;
-      if (!firstName || !lastName || !password || !email) {
+      const { firstName, lastName, email, projectId} = req.body;
+      if (!firstName || !lastName || !email || !projectId) {
         return res.status(400);
       }
       let user = await User.findOne({
         where: { email },
       });
       if (user) {
-        return res.status(400);
+        return res.sendStatus(400);
       }
       user = await User.create({
         firstName,
         lastName,
-        password,
         email,
+        projectId
       });
 
-      return res.status(201).json({ message: "Account created!", user });
+      return res.status(201).json({ message: "User created!", user });
     } catch (error) {
       return res.status(500);
     }

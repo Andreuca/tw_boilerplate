@@ -1,13 +1,11 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import {
-  Button,
-  Box,
-  Heading,
+  Box, Button, Heading,
   Input,
   NumberInput,
-  NumberInputField,
+  NumberInputField
 } from "@chakra-ui/react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { post } from "../utils/useAxios";
 
 function AddProject({ setProjectList }) {

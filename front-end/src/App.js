@@ -1,13 +1,42 @@
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import Page1 from "./pages/Page1";
-import Page2 from "./pages/Page2";
-import Home from "./pages/Home";
-import { Flex, Box } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import { BrowserRouter as Router, Link, Route, Routes } from "react-router-dom";
 import AddProject from "./pages/AddProject";
-import { useState } from "react";
+import AddUser from "./pages/AddUser";
+import EditProject from "./pages/EditProject";
+import Home from "./pages/Home";
+import UserPage from "./pages/UserPage";
+import { get } from "./utils/useAxios";
 
 function App() {
   const [projectList, setProjectList] = useState([]);
+  const [userList, setUserList] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await get("/project/");
+        if (response.status === 200) {
+          setProjectList(response.data.projects);
+        }
+      } catch (error) {}
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await get("/user/");
+        if (response.status === 200) {
+          setUserList(response.data.users);
+        }
+      } catch (error) {}
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <Box marginX={"1em"}>
@@ -17,22 +46,41 @@ function App() {
             <Link to="/">Home</Link>
           </Box>
           <Box marginRight={"1em"}>
-            <Link to="/page1">page1</Link>
-          </Box>
-          <Box marginRight={"1em"}>
-            <Link to="/page2">page2</Link>
+            <Link to="/users">Users</Link>
           </Box>
         </Flex>
 
         <Routes>
           <Route
-            path="/project/add"
+            path="/user/add/"
+            element={<AddUser projectList={projectList} setUserList={setUserList} />}
+          />
+          <Route
+            path="/project/add/"
             element={<AddProject setProjectList={setProjectList} />}
           />
-          <Route path="/page1" element={<Page1 />} />
-          <Route path="/page2" element={<Page2 />} />
-
-          <Route path="/" element={<Home projectList={projectList} />} />
+          <Route
+            path="/project/edit/:id"
+            element={
+              <EditProject
+                projectList={projectList}
+                setProjectList={setProjectList}
+                canEdit={false}
+              />
+            }
+          />
+          <Route
+            path="/users"
+            element={
+              <UserPage userList={userList} setUserList={setUserList} canEdit={true} />
+            }
+          />
+          <Route
+            path="/"
+            element={
+              <Home projectList={projectList} setProjectList={setProjectList} />
+            }
+          />
         </Routes>
       </Router>
     </Box>

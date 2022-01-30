@@ -6,12 +6,7 @@ const User = db.define(
   {
     firstName: sequelize.STRING,
     lastName: sequelize.STRING,
-    password: sequelize.STRING,
     email: sequelize.STRING,
-    isAdmin: {
-      type:sequelize.BOOLEAN,
-      defaultValue: false,
-    }
   },
 );
 

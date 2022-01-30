@@ -1,10 +1,11 @@
 const Project = require("../models/Project");
+const User = require("../models/User");
 
 const controller = {
   getAll: async (req, res) => {
     try {
       const projects = await Project.findAll();
-      return res.status(200).send(projects);
+      return res.status(200).json({ projects });
     } catch (error) {
       return res.sendStatus(500);
     }
@@ -41,7 +42,7 @@ const controller = {
   },
   updateProject: async (req, res) => {
     try {
-      const { link, name } = req.body;
+      const { link, name, difficulty } = req.body;
       const id = parseInt(req.params.id);
       let project = await Project.findByPk(id);
       if (!project) {
@@ -49,6 +50,7 @@ const controller = {
       }
       project.name = name;
       project.link = link;
+      project.difficulty = difficulty;
       await project.save();
 
       return res

@@ -1,7 +1,25 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Button } from "@chakra-ui/react";
 import React from "react";
+import { Link } from "react-router-dom";
+import { remove } from "../../utils/useAxios";
 
-function projectCard({ project }) {
+
+function projectCard({ project, setProjectList }) {
+
+  const onDeleteClick = async () => {
+    try {
+      const response = await remove(`/project/${project.id}`)
+      if(response.status == 200) {
+        setProjectList(oldProjects => {
+          const newProjects = oldProjects.filter(p => p.id != project.id)
+          return newProjects
+        })
+      } 
+    } catch (error) {
+      alert('error')
+    }
+  }
+
   return (
     <Box
       maxW="sm"
@@ -34,12 +52,19 @@ function projectCard({ project }) {
         >
           {project.name}
         </Box>
-
         <Box display="flex" mt="2" alignItems="center">
           <Box as="span" ml="2" color="gray.600" fontSize="sm">
             {project.link}
           </Box>
         </Box>
+        <Link to={`/project/edit/${project.id}`} >
+          <Button colorScheme="blue" marginTop="2em" size={"sm"} mr="1em">
+            Edit Project
+          </Button>
+        </Link>
+        <Button colorScheme="red" marginTop="2em" size={"sm"} onClick={onDeleteClick}>
+          Delete Project
+        </Button>
       </Box>
     </Box>
   );

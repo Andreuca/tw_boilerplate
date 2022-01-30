@@ -1,5 +1,5 @@
-const user = require("./user");
-const project = require("./project");
+const user = require("./User");
+const project = require("./Project");
 
 project.hasMany(user);
 user.belongsTo(project);

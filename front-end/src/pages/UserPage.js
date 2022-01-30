@@ -13,7 +13,7 @@ function UserPage({ userList, setUserList, canEdit }) {
         <Box width="60vw" mx="auto" mt="1em">
           <Text as="h4">Filter by user email</Text>
           <Input
-            placeholder="Project link"
+            placeholder="User email"
             marginBottom={"1em"}
             value={userEmail}
             onChange={(e) => setUserEmail(e.target.value)}

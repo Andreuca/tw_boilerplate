@@ -66,7 +66,7 @@ const controller = {
   },
   updateUser: async (req, res) => {
     try {
-      const { firstName, lastName } = req.body;
+      const { firstName, lastName, projectId } = req.body;
       const id = parseInt(req.params.id);
       let user = await User.findByPk(id);
       if (!user) {
@@ -74,6 +74,7 @@ const controller = {
       }
       user.firstName = firstName;
       user.lastName = lastName;
+      user.projectId = projectId;
       await user.save();
 
       return res

@@ -61,7 +61,7 @@ function UserCard({ user, setUserList, canEdit }) {
         </Box>
         {canEdit && (
           <Box>
-            <Link to={`/project/edit/${user.id}`}>
+            <Link to={`/user/edit/${user.id}`}>
               <Button colorScheme="blue" marginTop="2em" size={"sm"} mr="1em">
                 Edit user
               </Button>

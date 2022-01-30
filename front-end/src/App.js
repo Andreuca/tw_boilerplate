@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Link, Route, Routes } from "react-router-dom";
 import AddProject from "./pages/AddProject";
 import AddUser from "./pages/AddUser";
 import EditProject from "./pages/EditProject";
+import EditUser from "./pages/EditUser";
 import Home from "./pages/Home";
 import UserPage from "./pages/UserPage";
 import { get } from "./utils/useAxios";
@@ -54,6 +55,10 @@ function App() {
           <Route
             path="/user/add/"
             element={<AddUser projectList={projectList} setUserList={setUserList} />}
+          />
+          <Route
+            path="/user/edit/:id"
+            element={<EditUser projectList={projectList} setUserList={setUserList} userList={userList}/>}
           />
           <Route
             path="/project/add/"

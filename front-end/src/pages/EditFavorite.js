@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from 'react-router-dom';
-import VideoCard from "../components/user/VideoCard";
+import VideoCard from "../components/video/VideoCard";
 import { get, patch } from "../utils/useAxios";
 
 function EditFavorite({ favoriteList, setFavoriteList, canEdit }) {

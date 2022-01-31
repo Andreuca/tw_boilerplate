@@ -1,7 +1,7 @@
 import { Box, Button, Heading, Text, Input } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import VideoList from "../components/user/VideoList";
+import VideoList from "../components/video/VideoList";
 
 function VideoPage({ videoList, setVideoList, canEdit }) {
   const [videoTitle, setVideoTitle] = useState("");

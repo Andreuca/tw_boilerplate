@@ -2,11 +2,11 @@ import { Box, Button, Heading, Input, Select } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { post } from "../utils/useAxios";
-
-function AddVideo({ favoriteList, setVideoList}) {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [url, setUrl] = useState('');
+import { isValidHttpUrl } from "../utils/useUrl";
+function AddVideo({ favoriteList, setVideoList }) {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [url, setUrl] = useState("");
   const [favorite, setFavorite] = useState();
 
   const navigate = useNavigate();
@@ -22,17 +22,22 @@ function AddVideo({ favoriteList, setVideoList}) {
       url: url,
       favoriteListId: favorite,
     };
-    try {
-      const response = await post("/video/", { ...video });
-      if (response.status === 201) {
-        setVideoList(value => [...value, response.data.video])
-        navigate("/videos");
-      } else {
+    const valid = isValidHttpUrl(url);
+    if (valid) {
+      try {
+        const response = await post("/video/", { ...video });
+        if (response.status === 201) {
+          setVideoList((value) => [...value, response.data.video]);
+          navigate("/videos");
+        } else {
+          alert("Invalid");
+        }
+      } catch (error) {
         alert("Invalid");
+        console.log(error);
       }
-    } catch (error) {
-      alert("Invalid");
-      console.log(error);
+    } else {
+      alert("invalid Url");
     }
   }
 
@@ -40,7 +45,7 @@ function AddVideo({ favoriteList, setVideoList}) {
     <Box textAlign="center" marginBottom="2em">
       <Heading>Add Video</Heading>
       <Box width={"60vw"} marginX="auto" marginTop="2em">
-      <Input
+        <Input
           placeholder="Title"
           marginBottom={"1em"}
           value={title}

@@ -2,7 +2,7 @@ import { Box, Button, Heading, Input, Select } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { patch } from "../utils/useAxios";
-
+import { isValidHttpUrl } from "../utils/useUrl";
 function EditVideo({ favoriteList, setVideoList, videoList }) {
   let { id } = useParams();
   id = parseInt(id);
@@ -25,21 +25,26 @@ function EditVideo({ favoriteList, setVideoList, videoList }) {
       url: url,
       favoriteListId: favorite,
     };
-    try {
-      const response = await patch(`/video/${id}`, { ...video });
-      if (response.status === 200) {
-        setVideoList((value) => {
+    const valid = isValidHttpUrl(url);
+    if (valid) {
+      try {
+        const response = await patch(`/video/${id}`, { ...video });
+        if (response.status === 200) {
+          setVideoList((value) => {
             let newVideos = videoList.filter((v) => v.id != id);
             newVideos = [...newVideos, response.data.video];
             return newVideos;
-        });
-        navigate("/videos");
-      } else {
+          });
+          navigate("/videos");
+        } else {
+          alert("Invalid");
+        }
+      } catch (error) {
         alert("Invalid");
+        console.log(error);
       }
-    } catch (error) {
-      alert("Invalid");
-      console.log(error);
+    } else {
+      alert("url invalid");
     }
   }
 

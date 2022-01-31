@@ -7,7 +7,7 @@ import {
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import FavoriteList from "../components/project/FavoriteList";
+import FavoriteList from "../components/favorite/FavoriteList";
 
 function Home({ favoriteList, setFavoriteList }) {
   const [description, setDescription] = useState("");

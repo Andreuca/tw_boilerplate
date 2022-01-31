@@ -1,24 +1,24 @@
 import { Box, Flex } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Link, Route, Routes } from "react-router-dom";
-import AddProject from "./pages/AddProject";
-import AddUser from "./pages/AddUser";
-import EditProject from "./pages/EditProject";
-import EditUser from "./pages/EditUser";
+import AddFavorite from "./pages/AddFavorite";
+import AddVideo from "./pages/AddVideo";
+import EditFavorite from "./pages/EditFavorite";
+import EditVideo from "./pages/EditVideo";
 import Home from "./pages/Home";
-import UserPage from "./pages/UserPage";
+import VideoPage from "./pages/VideoPage";
 import { get } from "./utils/useAxios";
 
 function App() {
-  const [projectList, setProjectList] = useState([]);
-  const [userList, setUserList] = useState([]);
+  const [favoriteList, setFavoriteList] = useState([]);
+  const [videoList, setVideoList] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await get("/project/");
+        const response = await get("/favorite/");
         if (response.status === 200) {
-          setProjectList(response.data.projects);
+          setFavoriteList(response.data.favorite);
         }
       } catch (error) {}
     };
@@ -29,9 +29,9 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await get("/user/");
+        const response = await get("/video/");
         if (response.status === 200) {
-          setUserList(response.data.users);
+          setVideoList(response.data.videos);
         }
       } catch (error) {}
     };
@@ -47,43 +47,43 @@ function App() {
             <Link to="/">Home</Link>
           </Box>
           <Box marginRight={"1em"}>
-            <Link to="/users">Users</Link>
+            <Link to="/videos">Videos</Link>
           </Box>
         </Flex>
 
         <Routes>
           <Route
-            path="/user/add/"
-            element={<AddUser projectList={projectList} setUserList={setUserList} />}
+            path="/video/add/"
+            element={<AddVideo favoriteList={favoriteList} setVideoList={setVideoList} />}
           />
           <Route
-            path="/user/edit/:id"
-            element={<EditUser projectList={projectList} setUserList={setUserList} userList={userList}/>}
+            path="/video/edit/:id"
+            element={<EditVideo favoriteList={favoriteList} setVideoList={setVideoList} videoList={videoList}/>}
           />
           <Route
-            path="/project/add/"
-            element={<AddProject setProjectList={setProjectList} />}
+            path="/favorite/add/"
+            element={<AddFavorite setFavoriteList={setFavoriteList} />}
           />
           <Route
-            path="/project/edit/:id"
+            path="/favorite/edit/:id"
             element={
-              <EditProject
-                projectList={projectList}
-                setProjectList={setProjectList}
+              <EditFavorite
+                favoriteList={favoriteList}
+                setFavoriteList={setFavoriteList}
                 canEdit={false}
               />
             }
           />
           <Route
-            path="/users"
+            path="/videos"
             element={
-              <UserPage userList={userList} setUserList={setUserList} canEdit={true} />
+              <VideoPage videoList={videoList} setVideoList={setVideoList} canEdit={true} />
             }
           />
           <Route
             path="/"
             element={
-              <Home projectList={projectList} setProjectList={setProjectList} />
+              <Home favoriteList={favoriteList} setFavoriteList={setFavoriteList} />
             }
           />
         </Routes>

@@ -3,15 +3,15 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { remove } from "../../utils/useAxios";
 
-function UserCard({ user, setUserList, canEdit }) {
+function VideoCard({ video, setVideoList, canEdit }) {
   const onDeleteClick = async () => {
     try {
-      const response = await remove(`/user/${user.id}`);
+      const response = await remove(`/video/${video.id}`);
       if (response.status == 200) {
-        if (setUserList) {
-          setUserList((oldUsers) => {
-            const newUsers = oldUsers.filter((u) => u.id != user.id);
-            return newUsers;
+        if (setVideoList) {
+          setVideoList((oldVideos) => {
+            const newVideos = oldVideos.filter((v) => v.id != video.id);
+            return newVideos;
           });
         }
       }
@@ -36,8 +36,9 @@ function UserCard({ user, setUserList, canEdit }) {
             fontWeight="semibold"
             letterSpacing="wide"
             fontSize="xs"
+            isTruncated
           >
-            {user.email}
+            {video.url}
           </Box>
         </Box>
 
@@ -48,22 +49,20 @@ function UserCard({ user, setUserList, canEdit }) {
           lineHeight="tight"
           isTruncated
         >
-          {user.firstName}
+          {video.title}
         </Box>
         <Box
           mt="1"
-          fontWeight="semibold"
-          as="h4"
           lineHeight="tight"
           isTruncated
         >
-          {user.lastName}
+          {video.description}
         </Box>
         {canEdit && (
           <Box>
-            <Link to={`/user/edit/${user.id}`}>
+            <Link to={`/video/edit/${video.id}`}>
               <Button colorScheme="blue" marginTop="2em" size={"sm"} mr="1em">
-                Edit user
+                Edit video
               </Button>
             </Link>
             <Button
@@ -72,7 +71,7 @@ function UserCard({ user, setUserList, canEdit }) {
               size={"sm"}
               onClick={onDeleteClick}
             >
-              Delete user
+              Delete video
             </Button>
           </Box>
         )}
@@ -81,4 +80,4 @@ function UserCard({ user, setUserList, canEdit }) {
   );
 }
 
-export default UserCard;
+export default VideoCard;

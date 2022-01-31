@@ -1,10 +1,10 @@
-const user = require("./User");
-const project = require("./Project");
+const Video = require("./Video");
+const FavoriteList = require("./FavoriteList");
 
-project.hasMany(user);
-user.belongsTo(project);
+FavoriteList.hasMany(Video);
+Video.belongsTo(FavoriteList);
 
 module.exports = {
-  user: user,
-  project: project,
+  Video: Video,
+  FavoriteList: FavoriteList,
 };

@@ -1,11 +1,11 @@
-const userController = require("./user");
-const projectController = require("./project");
+const videoController = require("./video");
+const favoriteController = require("./favoriteList");
 const dbController = require("./db");
 
 const controllers = {
-  user: userController,
+  video: videoController,
   db: dbController,
-  project: projectController,
+  favorite: favoriteController,
 };
 
 module.exports = controllers;

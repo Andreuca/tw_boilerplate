@@ -2,44 +2,40 @@ import {
   Box,
   Button,
   Heading,
-  NumberInput,
-  NumberInputField,
-  Text
+  Input,
+  Text,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import ProjectList from "../components/project/ProjectList";
+import FavoriteList from "../components/project/FavoriteList";
 
-function Home({ projectList, setProjectList }) {
-  const [projectDiff, setProjectDiff] = useState(1);
+function Home({ favoriteList, setFavoriteList }) {
+  const [description, setDescription] = useState("");
 
   return (
     <Box>
       <Box textAlign="center" marginBottom="2em">
-        <Heading>Proiecte</Heading>
+        <Heading>Favorite</Heading>
         <Box width="60vw" mx="auto" mt="1em">
-          <Text as="h4">Filter by minimum difficulty</Text>
-          <NumberInput
-            placeholder="Project difficulty"
-            min="1"
-            max="100"
-            value={projectDiff}
-            onChange={(value) => setProjectDiff(value)}
-          >
-            <NumberInputField />
-          </NumberInput>
+          <Text as="h4">Filter by description</Text>
+          <Input
+            placeholder="Description"
+            marginBottom={"1em"}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
         </Box>
       </Box>
-      <Link to="/project/add">
+      <Link to="/favorite/add">
         <Button colorScheme="green" marginBottom="1em">
-          Add Project
+          Add Favorite
         </Button>
       </Link>
 
-      <ProjectList
-        projectList={projectList}
-        setProjectList={setProjectList}
-        projectDiff={projectDiff}
+      <FavoriteList
+        favoriteList={favoriteList}
+        setFavoriteList={setFavoriteList}
+        description={description}
       />
     </Box>
   );

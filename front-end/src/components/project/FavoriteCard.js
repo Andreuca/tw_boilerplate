@@ -4,15 +4,15 @@ import { Link } from "react-router-dom";
 import { remove } from "../../utils/useAxios";
 
 
-function projectCard({ project, setProjectList }) {
+function FavoriteCard({ favorite, setFavoriteList }) {
 
   const onDeleteClick = async () => {
     try {
-      const response = await remove(`/project/${project.id}`)
+      const response = await remove(`/favorite/${favorite.id}`)
       if(response.status == 200) {
-        setProjectList(oldProjects => {
-          const newProjects = oldProjects.filter(p => p.id != project.id)
-          return newProjects
+        setFavoriteList(value => {
+          const newFavorite = value.filter(f => f.id != favorite.id)
+          return newFavorite
         })
       } 
     } catch (error) {
@@ -30,19 +30,6 @@ function projectCard({ project, setProjectList }) {
       mt={"1em"}
     >
       <Box p="6">
-        <Box display="flex" alignItems="baseline">
-          <Box
-            color="gray.500"
-            fontWeight="semibold"
-            letterSpacing="wide"
-            fontSize="xs"
-            textTransform="uppercase"
-            ml="2"
-          >
-            {project.difficulty} difficulty
-          </Box>
-        </Box>
-
         <Box
           mt="1"
           fontWeight="semibold"
@@ -50,24 +37,24 @@ function projectCard({ project, setProjectList }) {
           lineHeight="tight"
           isTruncated
         >
-          {project.name}
+          {favorite.description}
         </Box>
         <Box display="flex" mt="2" alignItems="center">
           <Box as="span" ml="2" color="gray.600" fontSize="sm">
-            {project.link}
+            {favorite.createdAt}
           </Box>
         </Box>
-        <Link to={`/project/edit/${project.id}`} >
+        <Link to={`/favorite/edit/${favorite.id}`} >
           <Button colorScheme="blue" marginTop="2em" size={"sm"} mr="1em">
-            Edit Project
+            Edit Favorite
           </Button>
         </Link>
         <Button colorScheme="red" marginTop="2em" size={"sm"} onClick={onDeleteClick}>
-          Delete Project
+          Delete Favorite
         </Button>
       </Box>
     </Box>
   );
 }
 
-export default projectCard;
+export default FavoriteCard;
